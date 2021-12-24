@@ -74,6 +74,22 @@ class _LoginState extends State<Login> {
           child: TextFormField(
             obscureText: statusRedEye,
             decoration: InputDecoration(
+              suffixIcon: IconButton(
+                icon: statusRedEye
+                    ? Icon(
+                        Icons.remove_red_eye,
+                        color: MyConstant.dart,
+                      )
+                    : Icon(
+                        Icons.remove_red_eye_outlined,
+                        color: MyConstant.dart,
+                      ),
+                onPressed: () {
+                  setState(() {
+                    statusRedEye = !statusRedEye;
+                  });
+                },
+              ),
               labelStyle: MyConstant().h3Stlye(),
               labelText: 'Password',
               prefixIcon: Icon(
