@@ -10,6 +10,8 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
+  final formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
@@ -22,17 +24,43 @@ class _CreateAccountState extends State<CreateAccount> {
           title: Text('สมัครสมาชิก'),
           backgroundColor: MyConstant.primary,
         ),
-        body: ListView(
-          padding: EdgeInsets.all(16),
-          children: [
-            buildTitle('ข้อมูลในการสมัคร'),
-            buildUser(size),
-            buildPassword(size),
-            buildName(size),
-            buildPhoneNumber(size),
-          ],
+        body: Form(
+          key: formkey,
+          child: ListView(
+            padding: EdgeInsets.all(16),
+            children: [
+              buildTitle('ข้อมูลในการสมัคร'),
+              buildUser(size),
+              buildPassword(size),
+              buildName(size),
+              buildPhoneNumber(size),
+              buildCreate(size),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Row buildCreate(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(
+            vertical: 16,
+          ),
+          width: size * 0.6,
+          child: ElevatedButton(
+            style: MyConstant().myButtonStyle(),
+            onPressed: () {
+              if (formkey.currentState!.validate()) {
+              } else {}
+            },
+            child: Text('สมัคร'),
+          ),
+        ),
+      ],
     );
   }
 
@@ -46,6 +74,11 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอกชื่อ - นามสกุล';
+              } else {}
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Stlye(),
               labelText: 'ชื่อ - นามสกุล',
@@ -78,6 +111,11 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอกเบอร์ติดต่อ';
+              } else {}
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Stlye(),
               labelText: 'เบอร์ติดต่อ',
@@ -110,6 +148,11 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก ID';
+              } else {}
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Stlye(),
               labelText: 'ID',
@@ -142,6 +185,11 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอกรหัสผ่าน';
+              } else {}
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Stlye(),
               labelText: 'รหัสผ่าน',
