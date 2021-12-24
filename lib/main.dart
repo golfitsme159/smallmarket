@@ -9,9 +9,9 @@ import 'package:smallmarket/utillity/my_constant.dart';
 final Map<String, WidgetBuilder> map = {
   '/login': (BuildContext context) => Login(),
   '/createAccount': (BuildContext context) => CreateAccount(),
-  'home': (BuildContext context) => Home(),
-  'reserve': (BuildContext context) => Reserve(),
-  'rent': (BuildContext context) => Rent(),
+  '/home': (BuildContext context) => Home(),
+  '/reserve': (BuildContext context) => Reserve(),
+  '/rent': (BuildContext context) => Rent(),
 };
 
 String? initialRoute;

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class MyConstant {
   // Genernal
-  static String appName = 'SmallMerket';
+  static String appName = 'Small Merket';
 
   // Route
   static String routeLogin = '/login';
   static String routeCreateAccount = '/createAccount';
-  static String routeHome = 'home';
-  static String routeReserve = 'reserve';
-  static String routeRent = 'rent';
+  static String routeHome = '/home';
+  static String routeReserve = '/reserve';
+  static String routeRent = '/rent';
 
   // Image
   static String image1 = 'images/image1.png';
@@ -38,5 +38,13 @@ class MyConstant {
         fontSize: 14,
         color: dart,
         fontWeight: FontWeight.normal,
+      );
+
+  // ButtonStyle
+  ButtonStyle myButtonStyle() => ElevatedButton.styleFrom(
+        primary: MyConstant.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
       );
 }

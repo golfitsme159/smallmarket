@@ -18,15 +18,57 @@ class _LoginState extends State<Login> {
     double size = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          children: [
-            buildImage(size),
-            buildAppName(),
-            buildUser(size),
-            buildPassword(size),
-          ],
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          behavior: HitTestBehavior.opaque,
+          child: ListView(
+            children: [
+              buildImage(size),
+              buildAppName(),
+              buildUser(size),
+              buildPassword(size),
+              buildLogin(size),
+              buildCreateAccount(),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Row buildCreateAccount() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ShowTitle(
+          title: 'ยังไม่มีบัญชี ?',
+          textStyle: MyConstant().h3Stlye(),
+        ),
+        TextButton(
+          onPressed: () =>
+              Navigator.pushNamed(context, MyConstant.routeCreateAccount),
+          child: Text('สมัครสมาชิก'),
+        ),
+      ],
+    );
+  }
+
+  Row buildLogin(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(
+            vertical: 16,
+          ),
+          width: size * 0.6,
+          child: ElevatedButton(
+            style: MyConstant().myButtonStyle(),
+            onPressed: () {},
+            child: Text('เข้าสู่ระบบ'),
+          ),
+        ),
+      ],
     );
   }
 
@@ -42,7 +84,7 @@ class _LoginState extends State<Login> {
           child: TextFormField(
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Stlye(),
-              labelText: 'Email',
+              labelText: 'ID',
               prefixIcon: Icon(
                 Icons.account_circle_outlined,
                 color: MyConstant.dart,
@@ -91,7 +133,7 @@ class _LoginState extends State<Login> {
                 },
               ),
               labelStyle: MyConstant().h3Stlye(),
-              labelText: 'Password',
+              labelText: 'รหัสผ่าน',
               prefixIcon: Icon(
                 Icons.password_outlined,
                 color: MyConstant.dart,
