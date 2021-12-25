@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smallmarket/utillity/my_constant.dart';
+import 'package:smallmarket/utillity/my_dialog.dart';
 import 'package:smallmarket/widgets/show_title.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -15,30 +16,44 @@ class _CreateAccountState extends State<CreateAccount> {
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
+    String? typeUser;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       behavior: HitTestBehavior.opaque,
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+            buildCreateAccount(typeUser),
+          ],
           title: Text('สมัครสมาชิก'),
           backgroundColor: MyConstant.primary,
         ),
         body: Form(
           key: formkey,
-          child: ListView(
-            padding: EdgeInsets.all(16),
-            children: [
-              buildTitle('ข้อมูลในการสมัคร'),
-              buildUser(size),
-              buildPassword(size),
-              buildName(size),
-              buildPhoneNumber(size),
-              buildCreate(size),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildTitle('ข้อมูลในการสมัคร'),
+                buildUser(size),
+                buildPassword(size),
+                buildName(size),
+                buildPhoneNumber(size),
+                buildCreate(size),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  IconButton buildCreateAccount(String? typeUser) {
+    return IconButton(
+      onPressed: () {
+        if (formkey.currentState!.validate()) {}
+      },
+      icon: Icon(Icons.cloud_upload),
     );
   }
 
@@ -55,7 +70,9 @@ class _CreateAccountState extends State<CreateAccount> {
             style: MyConstant().myButtonStyle(),
             onPressed: () {
               if (formkey.currentState!.validate()) {
-              } else {}
+                print('กระบวนการแทรกลงในฐานข้อมูล');
+                // MyDialog().normalDialog(context, title, message);
+              }
             },
             child: Text('สมัคร'),
           ),
@@ -111,6 +128,7 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            keyboardType: TextInputType.phone,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอกเบอร์ติดต่อ';
