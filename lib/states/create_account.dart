@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smallmarket/utillity/my_constant.dart';
 import 'package:smallmarket/utillity/my_dialog.dart';
 import 'package:smallmarket/widgets/show_title.dart';
+import 'package:dio/dio.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -12,6 +13,10 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   final formkey = GlobalKey<FormState>();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +75,9 @@ class _CreateAccountState extends State<CreateAccount> {
             style: MyConstant().myButtonStyle(),
             onPressed: () {
               if (formkey.currentState!.validate()) {
-                print('กระบวนการแทรกลงในฐานข้อมูล');
                 // MyDialog().normalDialog(context, title, message);
+                print('กระบวนการแทรกลงในฐานข้อมูล');
+                uplondDate();
               }
             },
             child: Text('สมัคร'),
@@ -79,6 +85,19 @@ class _CreateAccountState extends State<CreateAccount> {
         ),
       ],
     );
+  }
+
+  Future<Null> uplondDate() async {
+    String M_Name = nameController.text;
+    String M_User = userController.text;
+    String M_Pass = passController.text;
+    String M_Phonenumber = phoneController.text;
+    print(
+        '## M_User = $M_User,M_Pass = $M_Pass,M_Name = $M_Name,M_Phonenumber = $M_Phonenumber ##');
+
+    String path =
+        '${MyConstant.domain}/smallmarket/getUserWhereUser.php?isAdd=true&M_User=$M_User';
+    await Dio().get(path).then((value) => print('## value ==>> $value'));
   }
 
   Row buildName(double size) {
@@ -91,6 +110,7 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            controller: nameController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอกชื่อ - นามสกุล';
@@ -128,6 +148,7 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            controller: phoneController,
             keyboardType: TextInputType.phone,
             validator: (value) {
               if (value!.isEmpty) {
@@ -166,6 +187,7 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            controller: userController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก ID';
@@ -203,6 +225,7 @@ class _CreateAccountState extends State<CreateAccount> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            controller: passController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอกรหัสผ่าน';

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class MyConstant {
   // Genernal
   static String appName = 'Small Merket';
+  static String domain =
+      'https://1be2-2001-fb1-120-b33d-b91e-3ad2-e59d-28cd.ngrok.io';
 
   // Route
   static String routeLogin = '/login';
