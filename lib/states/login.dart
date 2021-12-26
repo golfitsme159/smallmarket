@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:smallmarket/models/user_model.dart';
 import 'package:smallmarket/utillity/my_constant.dart';
+import 'package:smallmarket/utillity/my_dialog.dart';
 import 'package:smallmarket/widgets/show_image.dart';
 import 'package:smallmarket/widgets/show_title.dart';
 
@@ -12,6 +17,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool statusRedEye = true;
+  final formKey = GlobalKey<FormState>();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +29,18 @@ class _LoginState extends State<Login> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           behavior: HitTestBehavior.opaque,
-          child: ListView(
-            children: [
-              buildImage(size),
-              buildAppName(),
-              buildUser(size),
-              buildPassword(size),
-              buildLogin(size),
-              buildCreateAccount(),
-            ],
+          child: Form(
+            key: formKey,
+            child: ListView(
+              children: [
+                buildImage(size),
+                buildAppName(),
+                buildUser(size),
+                buildPassword(size),
+                buildLogin(size),
+                buildCreateAccount(),
+              ],
+            ),
           ),
         ),
       ),
@@ -64,12 +75,44 @@ class _LoginState extends State<Login> {
           width: size * 0.6,
           child: ElevatedButton(
             style: MyConstant().myButtonStyle(),
-            onPressed: () {},
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                String M_User = userController.text;
+                String M_Pass = passController.text;
+                print('## usar = $M_User, password = $M_Pass ##');
+                checkLogin(M_User, M_Pass);
+              }
+            },
             child: Text('เข้าสู่ระบบ'),
           ),
         ),
       ],
     );
+  }
+
+  Future<Null> checkLogin(String? M_User, String? M_Pass) async {
+    String apiCheckLogin =
+        '${MyConstant.domain}/smallmarket/getUserWhereUser.php?isAdd=true&M_User=$M_User';
+    await Dio().get(apiCheckLogin).then((value) {
+      print('## value for API ==>> $value');
+      if (value.toString() == 'null') {
+        MyDialog()
+            .normalDialog(context, 'User ผิด!!!', 'ไม่มี User นี้อยู่ในระบบ');
+      } else {
+        for (var itme in json.decode(value.data)) {
+          UserModel model = UserModel.fromMap(itme);
+          if (M_Pass == model.M_Pass) {
+            // Success Login
+            Navigator.pushNamedAndRemoveUntil(
+                context, MyConstant.routeHome, (route) => false);
+          } else {
+            // Login False
+            MyDialog().normalDialog(
+                context, 'รหัสผ่านผิด!!', 'กรุณากรอกรหัสผ่านใหม่');
+          }
+        }
+      }
+    });
   }
 
   Row buildUser(double size) {
@@ -82,6 +125,14 @@ class _LoginState extends State<Login> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            controller: userController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก User';
+              } else {
+                return null;
+              }
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Stlye(),
               labelText: 'ID',
@@ -114,6 +165,14 @@ class _LoginState extends State<Login> {
           ),
           width: size * 0.6,
           child: TextFormField(
+            controller: passController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอกรหัสผ่าน';
+              } else {
+                return null;
+              }
+            },
             obscureText: statusRedEye,
             decoration: InputDecoration(
               suffixIcon: IconButton(
