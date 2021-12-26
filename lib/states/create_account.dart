@@ -29,7 +29,7 @@ class _CreateAccountState extends State<CreateAccount> {
       child: Scaffold(
         appBar: AppBar(
           actions: [
-            buildCreateAccount(typeUser),
+            // buildCreateAccount(typeUser),
           ],
           title: Text('สมัครสมาชิก'),
           backgroundColor: MyConstant.primary,
@@ -97,7 +97,36 @@ class _CreateAccountState extends State<CreateAccount> {
 
     String path =
         '${MyConstant.domain}/smallmarket/getUserWhereUser.php?isAdd=true&M_User=$M_User';
-    await Dio().get(path).then((value) => print('## value ==>> $value'));
+    await Dio().get(path).then((value) {
+      print('## value ==>> $value');
+      if (value.toString() == 'null') {
+        print('## user OK');
+        processInserMySQL(
+            M_User: M_User,
+            M_Pass: M_Pass,
+            M_Name: M_Name,
+            M_Phonenumber: M_Phonenumber);
+      } else {
+        MyDialog().normalDialog(context, 'Userซ้ำ', 'กรุณาเปลี่ยน User');
+      }
+    });
+  }
+
+  Future<Null> processInserMySQL(
+      {String? M_User,
+      String? M_Pass,
+      String? M_Name,
+      String? M_Phonenumber}) async {
+    String apiInserUser =
+        '${MyConstant.domain}/smallmarket/insertUser.php?isAdd=true&M_User=$M_User&M_Pass=$M_Pass&M_Name=$M_Name&M_Phonenumber=$M_Phonenumber';
+    await Dio().post(apiInserUser).then((value) {
+      if (value.toString() == 'true') {
+        Navigator.pop(context);
+      } else {
+        MyDialog().normalDialog(
+            context, 'ทำการสมัครผิดพลาด!!!', 'กรุณากรอกข้อมูลใหม่');
+      }
+    });
   }
 
   Row buildName(double size) {

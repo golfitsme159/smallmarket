@@ -4,7 +4,7 @@ class MyConstant {
   // Genernal
   static String appName = 'Small Merket';
   static String domain =
-      'https://1be2-2001-fb1-120-b33d-b91e-3ad2-e59d-28cd.ngrok.io';
+      'https://e70b-2001-fb1-120-b33d-b91e-3ad2-e59d-28cd.ngrok.io';
 
   // Route
   static String routeLogin = '/login';
@@ -18,12 +18,11 @@ class MyConstant {
   static String image2 = 'images/image2.png';
   static String image3 = 'images/image3.png';
   static String image4 = 'images/image4.png';
-  static String image5 = 'images/image5.png';
 
   //Color
-  static Color primary = Color(0xff827717);
-  static Color dart = Color(0xff524c00);
-  static Color light = Color(0xffb4a647);
+  static Color primary = Color(0xffffccbc);
+  static Color dart = Color(0xffcb9b8c);
+  static Color light = Color(0xffffffee);
 
   // Style
   TextStyle h1Stlye() => TextStyle(
