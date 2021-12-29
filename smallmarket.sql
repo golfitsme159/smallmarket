@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2021 at 09:19 AM
+-- Generation Time: Dec 29, 2021 at 09:15 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -52,9 +52,9 @@ INSERT INTO `bank` (`Bank_ID`, `Bank_name`) VALUES
 --
 
 CREATE TABLE `lock` (
-  `L_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
-  `L_Name` varchar(26) COLLATE utf8_thai_520_w2 NOT NULL,
-  `P_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL
+  `L_ID` int(11) NOT NULL,
+  `L_Name` text COLLATE utf8_thai_520_w2 NOT NULL,
+  `P_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_thai_520_w2;
 
 -- --------------------------------------------------------
@@ -76,7 +76,7 @@ CREATE TABLE `member` (
 --
 
 INSERT INTO `member` (`M_ID`, `M_User`, `M_Pass`, `M_Name`, `M_Phonenumber`) VALUES
-(2, '$M_User', '$M_Pass', '$M_Name', '$M_Phonenumber');
+(1, 'golf', '12345', 'golf', '0987654321');
 
 -- --------------------------------------------------------
 
@@ -133,10 +133,10 @@ INSERT INTO `paymentstatus` (`PS_ID`, `PS_Name`) VALUES
 --
 
 CREATE TABLE `price` (
-  `P_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
-  `Price` int(10) NOT NULL,
-  `Z_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
-  `T_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL
+  `P_ID` int(11) NOT NULL,
+  `Price` int(11) NOT NULL,
+  `Z_ID` int(11) NOT NULL,
+  `T_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_thai_520_w2;
 
 -- --------------------------------------------------------
@@ -146,8 +146,8 @@ CREATE TABLE `price` (
 --
 
 CREATE TABLE `producttype` (
-  `T_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
-  `T_Name` varchar(26) COLLATE utf8_thai_520_w2 NOT NULL
+  `T_ID` int(11) NOT NULL,
+  `T_Name` text COLLATE utf8_thai_520_w2 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_thai_520_w2;
 
 -- --------------------------------------------------------
@@ -157,12 +157,12 @@ CREATE TABLE `producttype` (
 --
 
 CREATE TABLE `rent` (
-  `R_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
-  `M_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
-  `L_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
+  `R_ID` int(11) NOT NULL,
+  `M_ID` int(11) NOT NULL,
+  `L_ID` int(11) NOT NULL,
   `R_FDate` date NOT NULL,
   `R_EDate` date NOT NULL,
-  `RS_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL
+  `RS_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_thai_520_w2;
 
 -- --------------------------------------------------------
@@ -191,11 +191,11 @@ INSERT INTO `rentstatus` (`RS_ID`, `RS_Name`) VALUES
 --
 
 CREATE TABLE `reserve` (
-  `RE_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
+  `RE_ID` int(11) NOT NULL,
   `RE_FDate` date NOT NULL,
   `RE_EDate` date NOT NULL,
-  `L_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
-  `RES_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL
+  `L_ID` int(11) NOT NULL,
+  `RES_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_thai_520_w2;
 
 -- --------------------------------------------------------
@@ -224,8 +224,8 @@ INSERT INTO `reservestatus` (`RES_ID`, `RES_Name`) VALUES
 --
 
 CREATE TABLE `zone` (
-  `Z_ID` varchar(6) COLLATE utf8_thai_520_w2 NOT NULL,
-  `Z_Name` varchar(26) COLLATE utf8_thai_520_w2 NOT NULL
+  `Z_ID` int(11) NOT NULL,
+  `Z_Name` text COLLATE utf8_thai_520_w2 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_thai_520_w2;
 
 --
@@ -305,14 +305,56 @@ ALTER TABLE `reservestatus`
   ADD PRIMARY KEY (`RES_ID`);
 
 --
+-- Indexes for table `zone`
+--
+ALTER TABLE `zone`
+  ADD PRIMARY KEY (`Z_ID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `lock`
+--
+ALTER TABLE `lock`
+  MODIFY `L_ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `M_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `M_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `price`
+--
+ALTER TABLE `price`
+  MODIFY `P_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `producttype`
+--
+ALTER TABLE `producttype`
+  MODIFY `T_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rent`
+--
+ALTER TABLE `rent`
+  MODIFY `R_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `reserve`
+--
+ALTER TABLE `reserve`
+  MODIFY `RE_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `zone`
+--
+ALTER TABLE `zone`
+  MODIFY `Z_ID` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

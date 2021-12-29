@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smallmarket/utillity/my_constant.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -7,7 +8,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Small Market'),
+        title: Text(MyConstant.appName),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smallmarket/models/user_model.dart';
 import 'package:smallmarket/utillity/my_constant.dart';
 import 'package:smallmarket/utillity/my_dialog.dart';
@@ -93,7 +94,7 @@ class _LoginState extends State<Login> {
   Future<Null> checkLogin(String? M_User, String? M_Pass) async {
     String apiCheckLogin =
         '${MyConstant.domain}/smallmarket/getUserWhereUser.php?isAdd=true&M_User=$M_User';
-    await Dio().get(apiCheckLogin).then((value) {
+    await Dio().get(apiCheckLogin).then((value) async {
       print('## value for API ==>> $value');
       if (value.toString() == 'null') {
         MyDialog()
@@ -103,6 +104,9 @@ class _LoginState extends State<Login> {
           UserModel model = UserModel.fromMap(itme);
           if (M_Pass == model.M_Pass) {
             // Success Login
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            // preferences.setString('M_User', model.M_User);
             Navigator.pushNamedAndRemoveUntil(
                 context, MyConstant.routeHome, (route) => false);
           } else {

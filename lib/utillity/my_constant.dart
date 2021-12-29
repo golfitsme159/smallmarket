@@ -4,7 +4,7 @@ class MyConstant {
   // Genernal
   static String appName = 'Small Merket';
   static String domain =
-      'https://e70b-2001-fb1-120-b33d-b91e-3ad2-e59d-28cd.ngrok.io';
+      'https://8406-2001-fb1-120-b33d-4999-96ae-7a91-1447.ngrok.io';
 
   // Route
   static String routeLogin = '/login';
