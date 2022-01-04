@@ -4,7 +4,7 @@ class MyConstant {
   // Genernal
   static String appName = 'Small Merket';
   static String domain =
-      'https://8406-2001-fb1-120-b33d-4999-96ae-7a91-1447.ngrok.io';
+      'https://13fc-2001-fb1-121-c5de-74e5-52e6-fc16-8c0d.ngrok.io';
 
   // Route
   static String routeLogin = '/login';
@@ -23,6 +23,18 @@ class MyConstant {
   static Color primary = Color(0xffffccbc);
   static Color dart = Color(0xffcb9b8c);
   static Color light = Color(0xffffffee);
+  static Map<int, Color> mapMaterialColor = {
+    50: Color.fromRGBO(203, 155, 140, 0.1),
+    100: Color.fromRGBO(203, 155, 140, 0.2),
+    200: Color.fromRGBO(203, 155, 140, 0.3),
+    300: Color.fromRGBO(203, 155, 140, 0.4),
+    400: Color.fromRGBO(203, 155, 140, 0.5),
+    500: Color.fromRGBO(203, 155, 140, 0.6),
+    600: Color.fromRGBO(203, 155, 140, 0.7),
+    700: Color.fromRGBO(203, 155, 140, 0.8),
+    800: Color.fromRGBO(203, 155, 140, 0.9),
+    900: Color.fromRGBO(203, 155, 140, 1.0),
+  };
 
   // Style
   TextStyle h1Stlye() => TextStyle(
@@ -35,9 +47,19 @@ class MyConstant {
         color: dart,
         fontWeight: FontWeight.w700,
       );
+  TextStyle h2WhiteStlye() => TextStyle(
+        fontSize: 18,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+      );
   TextStyle h3Stlye() => TextStyle(
         fontSize: 14,
         color: dart,
+        fontWeight: FontWeight.normal,
+      );
+  TextStyle h3WhiteStlye() => TextStyle(
+        fontSize: 14,
+        color: Colors.white,
         fontWeight: FontWeight.normal,
       );
 
