@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smallmarket/states/add_reserve.dart';
 import 'package:smallmarket/states/create_account.dart';
 import 'package:smallmarket/states/home.dart';
 import 'package:smallmarket/states/login.dart';
@@ -13,6 +14,7 @@ final Map<String, WidgetBuilder> map = {
   '/home': (BuildContext context) => Home(),
   '/reserve': (BuildContext context) => Reserve(),
   '/rent': (BuildContext context) => Rent(),
+  '/add_reserve': (BuildContext context) => AddReserve(),
 };
 
 String? initialRoute;
@@ -21,7 +23,7 @@ Future<Null> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   String? type = preferences.getString('type');
-  print('## TYPE ====> $type');
+  // print('## TYPE ====> $type');
   if (type?.isEmpty ?? true) {
     initialRoute = MyConstant.routeLogin;
     runApp(MyApp());
