@@ -20,7 +20,16 @@ if (isset($_GET)) {
 				
 		$M_ID = $_GET['M_ID'];
 
-		$result = mysqli_query($link, "SELECT * FROM reserve WHERE M_ID = '$M_ID'");
+		$result = mysqli_query($link, "SELECT r.RE_ID,r.RE_FDate,r.RE_EDate,
+			l.L_Name,re.RES_Name,m.M_Name,p.Price,t.T_Name,z.Z_Name 
+			FROM reserve r 
+			JOIN locks l ON r.L_ID = l.L_ID
+			JOIN reservestatus re ON r.RES_ID = re.RES_ID
+			JOIN member m ON r.M_ID = m.M_ID
+			JOIN price p ON l.P_ID = p.P_ID
+			JOIN producttype t ON p.T_ID = t.T_ID
+			JOIN zone z ON p.Z_ID = z.Z_ID
+			WHERE r.M_ID = '$M_ID'");
 
 		if ($result) {
 

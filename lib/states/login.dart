@@ -106,7 +106,9 @@ class _LoginState extends State<Login> {
             // Success Login
             SharedPreferences preferences =
                 await SharedPreferences.getInstance();
-            // preferences.setString('M_User', model.M_User);
+            preferences.setString('M_ID', model.M_ID!);
+            preferences.setString('M_User', model.M_User!);
+            preferences.setString('M_Name', model.M_Name!);
             Navigator.pushNamedAndRemoveUntil(
                 context, MyConstant.routeHome, (route) => false);
           } else {
