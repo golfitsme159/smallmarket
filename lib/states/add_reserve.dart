@@ -11,6 +11,7 @@ import 'package:smallmarket/models/lock_model.dart';
 import 'package:smallmarket/states/datePicker.dart';
 import 'package:smallmarket/utillity/my_constant.dart';
 import 'package:http/http.dart' as http;
+import 'package:smallmarket/utillity/my_dialog.dart';
 import 'package:smallmarket/widgets/show_title.dart';
 
 class AddReserve extends StatefulWidget {
@@ -106,42 +107,12 @@ class _AddReserveState extends State<AddReserve> {
     );
   }
 
-  Row buildConfirm(double size) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(
-            vertical: 16,
-          ),
-          width: size * 0.6,
-          child: ElevatedButton(
-            style: MyConstant().myButtonStyle(),
-            onPressed: () {
-              if (formkey.currentState!.validate()) {
-                // MyDialog().normalDialog(context, title, message);
-                print('กระบวนการแทรกลงในฐานข้อมูล');
-              }
-            },
-            child: Text('ตกลง'),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Future<Null> uplondReserve() async {}
-
   DropdownButton<String> buildDropLock() {
     return DropdownButton(
       value: dropdownValue,
       items: <String>[
         'A1',
         'A2',
-        'A3',
-        'B1',
-        'B2',
-        'B3',
       ].map((String value) {
         // print(value);
         return DropdownMenuItem(
@@ -165,5 +136,80 @@ class _AddReserveState extends State<AddReserve> {
             color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
       ),
     );
+  }
+
+  Row buildConfirm(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(
+            vertical: 16,
+          ),
+          width: size * 0.6,
+          child: ElevatedButton(
+            style: MyConstant().myButtonStyle(),
+            onPressed: () {
+              if (formkey.currentState!.validate()) {
+                // MyDialog().normalDialog(context, title, message);
+                print('กระบวนการแทรกลงในฐานข้อมูล');
+                uplondReserve();
+              }
+            },
+            child: Text('ตกลง'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<Null> uplondReserve() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String M_ID = preferences.getString('M_ID')!;
+    String? RE_FDate = pilihTanggal;
+    String? RE_EDate = pilihTanggal;
+    String? L_ID = dropdownValue;
+    String? RES_ID = '1';
+    if (L_ID == 'A1') {
+      L_ID = '1';
+    } else {
+      L_ID = '2';
+    }
+    print(
+        '## RE_FDate = $RE_FDate,RE_EDate = $RE_EDate,L_ID = $L_ID , RES_ID = $RES_ID , M_ID = $M_ID');
+    String path =
+        '${MyConstant.domain}/smallmarket/getReserveWhereDateLock.php?isAdd=true&RE_FDate=$RE_FDate&L_ID=$L_ID';
+    await Dio().get(path).then((value) {
+      print('## value => $value');
+      if (value.toString() == 'null') {
+        print('## Reserve OK');
+        processInserReseve(
+            RE_FDate: RE_FDate,
+            RE_EDate: RE_EDate,
+            L_ID: L_ID,
+            RES_ID: RES_ID,
+            M_ID: M_ID);
+      } else {
+        MyDialog().normalDialog(context, 'มีการจองวันที่ $RE_FDate ไปแล้ว',
+            'กรุณาเปลี่ยนวันที่จอง หรือล็อคที่จอง');
+      }
+    });
+  }
+
+  Future<Null> processInserReseve(
+      {String? RE_FDate,
+      String? RE_EDate,
+      String? L_ID,
+      String? RES_ID,
+      String? M_ID}) async {
+    String apiInserReseve =
+        '${MyConstant.domain}/smallmarket/insertReserve.php?isAdd=true&RE_FDate=$RE_FDate&RE_EDate=$RE_EDate&L_ID=$L_ID&RES_ID=$RES_ID&M_ID=$M_ID';
+    await Dio().post(apiInserReseve).then((value) {
+      if (value.toString() == 'true') {
+        Navigator.pop(context);
+      } else {
+        MyDialog().normalDialog(context, 'ทำการจองผิดพลาด!!!', 'กรุณาจองใหม่');
+      }
+    });
   }
 }
