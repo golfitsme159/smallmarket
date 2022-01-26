@@ -84,7 +84,7 @@ class _AddReserveState extends State<AddReserve> {
           ),
           ShowTitle(title: '', textStyle: MyConstant().h3Stlye()),
           ShowTitle(
-            title: 'เลือกวันจอง',
+            title: 'เลือกวันที่จอง',
             textStyle: MyConstant().h3Stlye(),
           ),
           DateDropDown(
