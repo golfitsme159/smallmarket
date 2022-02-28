@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smallmarket/states/add_reserve.dart';
 import 'package:smallmarket/states/create_account.dart';
+import 'package:smallmarket/states/edit_profile.dart';
 import 'package:smallmarket/states/home.dart';
 import 'package:smallmarket/states/login.dart';
 import 'package:smallmarket/states/rent.dart';
@@ -15,6 +16,7 @@ final Map<String, WidgetBuilder> map = {
   '/reserve': (BuildContext context) => Reserve(),
   '/rent': (BuildContext context) => Rent(),
   '/add_reserve': (BuildContext context) => AddReserve(),
+  '/edit_profile': (BuildContext context) => EditProfile(),
 };
 
 String? initialRoute;

@@ -85,7 +85,7 @@ class _AddReserveState extends State<AddReserve> {
           ),
           ShowTitle(title: '', textStyle: MyConstant().h3Stlye()),
           ShowTitle(
-            title: 'เลือกวันที่จอง',
+            title: 'เลือกวันที่เช่า',
             textStyle: MyConstant().h3Stlye(),
           ),
           DateDropDown(
@@ -166,8 +166,8 @@ class _AddReserveState extends State<AddReserve> {
   Future<Null> uplondReserve() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String M_ID = preferences.getString('M_ID')!;
-    String? RE_FDate = pilihTanggal;
-    String? RE_EDate = pilihTanggal;
+    String? RE_FDate = '$tgl';
+    String? RE_EDate = '$tgl';
     String? L_ID = dropdownValue;
     String? RES_ID = '1';
     if (L_ID == 'A1') {

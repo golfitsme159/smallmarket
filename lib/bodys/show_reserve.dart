@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smallmarket/models/reserve_model.dart';
+import 'package:smallmarket/states/details_reserve.dart';
 import 'package:smallmarket/utillity/my_constant.dart';
 import 'package:smallmarket/widgets/show_progress.dart';
 import 'package:smallmarket/widgets/show_title.dart';
@@ -144,7 +145,17 @@ class _ShowReserveState extends State<ShowReserve> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          print('## You Cick Datails');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailReserve(
+                                detailModel: reserveModels[index],
+                              ),
+                            ),
+                          );
+                        },
                         icon: Icon(
                           Icons.more_horiz,
                           size: 28,

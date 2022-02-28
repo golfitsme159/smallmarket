@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smallmarket/bodys/show_payment.dart';
 import 'package:smallmarket/bodys/show_rent.dart';
 import 'package:smallmarket/bodys/show_reserve.dart';
+import 'package:smallmarket/models/user_model.dart';
 import 'package:smallmarket/utillity/my_constant.dart';
 import 'package:smallmarket/widgets/show_signout.dart';
 import 'package:smallmarket/widgets/show_title.dart';
@@ -21,6 +25,32 @@ class _HomeState extends State<Home> {
     ShowPayment(),
   ];
   int indexWidget = 0;
+  UserModel? userModel;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    findUserModel();
+  }
+
+  Future<Null> findUserModel() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id = preferences.getString('M_User')!;
+    print('## ID Logined == $id');
+    String apiGetUserWhereUser =
+        '${MyConstant.domain}/smallmarket/getUserWhereUser.php?isAdd=true&M_User=$id';
+    await Dio().get(apiGetUserWhereUser).then((value) {
+      print('## value == >$value');
+      for (var item in json.decode(value.data)) {
+        setState(() {
+          userModel = UserModel.fromMap(item);
+          print('### name logined = ${userModel!.M_Name}');
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +64,7 @@ class _HomeState extends State<Home> {
             ShowSignOut(),
             Column(
               children: [
-                UserAccountsDrawerHeader(
-                  accountName: null,
-                  accountEmail: null,
-                ),
+                buildHead(),
                 menuShowReserve(),
                 menuShowRent(),
                 menuShowPayment(),
@@ -47,6 +74,30 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: widgets[indexWidget],
+    );
+  }
+
+  UserAccountsDrawerHeader buildHead() {
+    return UserAccountsDrawerHeader(
+      otherAccountsPictures: [
+        IconButton(
+          onPressed: () =>
+              Navigator.pushNamed(context, MyConstant.routeEditProfile),
+          icon: Icon(Icons.face_outlined),
+          iconSize: 36,
+          color: MyConstant.light,
+          tooltip: 'แก้ไขข้อมูลส่วนตัว',
+        ),
+      ],
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          colors: [MyConstant.light, MyConstant.dart],
+          center: Alignment(-0.8, -0.2),
+          radius: 1,
+        ),
+      ),
+      accountName: Text(userModel == null ? 'Name ?' : userModel!.M_Name!),
+      accountEmail: null,
     );
   }
 

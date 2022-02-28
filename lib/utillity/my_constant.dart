@@ -4,7 +4,7 @@ class MyConstant {
   // Genernal
   static String appName = 'Small Market';
   static String domain =
-      'https://17ba-2001-fb1-120-5a59-f9d1-15c8-631c-ee2a.ngrok.io';
+      'https://beea-2001-fb1-128-4c3-193b-15fc-3b4-184c.ngrok.io';
 
   // Route
   static String routeLogin = '/login';
@@ -13,6 +13,7 @@ class MyConstant {
   static String routeReserve = '/reserve';
   static String routeRent = '/rent';
   static String routeAddReserve = '/add_reserve';
+  static String routeEditProfile = '/edit_profile';
 
   // Image
   static String image1 = 'images/image1.png';
