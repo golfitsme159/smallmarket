@@ -65,7 +65,7 @@ class _ShowReserveState extends State<ShowReserve> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: lond
-          ? ShowProgress()
+          ? const ShowProgress()
           : haveData!
               ? LayoutBuilder(
                   builder: (context, constraints) => buildListView(constraints),
@@ -111,12 +111,12 @@ class _ShowReserveState extends State<ShowReserve> {
                     textStyle: MyConstant().h2Stlye(),
                   ),
                   ShowTitle(
-                    title: 'วันที่ต้องการเช่า',
+                    title: 'เดือนที่เช่า',
                     textStyle: MyConstant().h3Stlye(),
                   ),
                   ShowTitle(
                     title:
-                        '${reserveModels[index].RE_FDate} - ${reserveModels[index].RE_EDate}',
+                        '${reserveModels[index].RE_Month}/${reserveModels[index].RE_Year}',
                     textStyle: MyConstant().h3Stlye(),
                   ),
                 ],
@@ -192,7 +192,6 @@ class _ShowReserveState extends State<ShowReserve> {
       context: context,
       builder: (context) => AlertDialog(
         title: ListTile(
-          // leading: Image.network('${MyConstant.domain}'),
           title: ShowTitle(
             title: 'คุณต้องการยกเลิกใช่หรือไม่ ? ${reserveModels.L_Name}',
             textStyle: MyConstant().h2Stlye(),

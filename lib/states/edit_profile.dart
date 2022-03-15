@@ -81,7 +81,16 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<Null> processEditProfile() async {
     print('processEditProfile');
-    if (formKey.currentState!.validate()) {}
+    if (formKey.currentState!.validate()) {
+      editValueToMySQL();
+    }
+  }
+
+  Future<Null> editValueToMySQL() async {
+    print('แก้ไข');
+    String apiEditProfile =
+        '${MyConstant.domain}/smallmarket/editUserWhereUser.php?isAdd=true&M_ID=${userModel!.M_ID}&M_Name=${nameController.text}&M_Phonenumber=${phoneController.text}';
+    await Dio().get(apiEditProfile).then((value) => Navigator.pop(context));
   }
 
   ElevatedButton buildEditProfile() {

@@ -23,34 +23,52 @@ class AddReserve extends StatefulWidget {
 
 class _AddReserveState extends State<AddReserve> {
   final formkey = GlobalKey<FormState>();
-  DateTime? dateTime;
-  String? dropdownValue = 'A1';
+  // DateTime? dateTime;
+  String? dropdownMonth;
+  String? dropdownYear;
 
-  String? pilihTanggal;
+  // String? pilihTanggal;
   String labelText = '';
   DateTime tgl = new DateTime.now();
 
-  Future<Null> _selectedDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: tgl,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(DateTime.now().year + 1),
-    );
+  String? selectedName;
+  List data = [];
 
-    if (picked != null && picked != tgl) {
-      setState(() {
-        tgl = picked;
-        pilihTanggal = new DateFormat.yMd().format(tgl);
-      });
-    } else {}
+  Future getAllName() async {
+    var url = Uri.parse('http://192.168.1.42/smallmarket/lock.php');
+    var response = await http.get(url, headers: {"Accept": "application/json"});
+    var jsonBody = response.body;
+    var jsonData = json.decode(jsonBody);
+
+    setState(() {
+      data = jsonData;
+    });
+    print(jsonData);
+    return "success";
   }
+
+  // Future<Null> _selectedDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: tgl,
+  //     firstDate: DateTime.now(),
+  //     lastDate: DateTime(DateTime.now().year + 1),
+  //   );
+
+  //   if (picked != null && picked != tgl) {
+  //     setState(() {
+  //       tgl = picked;
+  //       pilihTanggal = new DateFormat.yMd().format(tgl);
+  //     });
+  //   } else {}
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    dateTime = DateTime.now();
+    // dateTime = DateTime.now();
+    getAllName();
   }
 
   @override
@@ -85,16 +103,17 @@ class _AddReserveState extends State<AddReserve> {
           ),
           ShowTitle(title: '', textStyle: MyConstant().h3Stlye()),
           ShowTitle(
-            title: 'เลือกวันที่เช่า',
+            title: 'เลือกเดือนที่เช่า',
             textStyle: MyConstant().h3Stlye(),
           ),
-          DateDropDown(
-            labelText: labelText,
-            valueText: new DateFormat.yMd().format(tgl),
-            onPressed: () {
-              _selectedDate(context);
-            },
-          ),
+          // DateDropDown(
+          //   labelText: labelText,
+          //   valueText: new DateFormat.yMd().format(tgl),
+          //   onPressed: () {
+          //     _selectedDate(context);
+          //   },
+          // ),
+          buildDropMonth(),
           ShowTitle(title: '', textStyle: MyConstant().h3Stlye()),
           ShowTitle(
             title: 'เลือกล็อค',
@@ -107,34 +126,99 @@ class _AddReserveState extends State<AddReserve> {
     );
   }
 
-  DropdownButton<String> buildDropLock() {
+  DropdownButton<String> buildDropMonth() {
     return DropdownButton(
-      value: dropdownValue,
-      items: <String>[
-        'A1',
-        'A2',
-      ].map((String value) {
+      value: dropdownMonth,
+      items: [
+        'มกราคม',
+        'กุมภาพันธ์',
+        'มีนาคม',
+        'เมษายน ',
+        'พฤษภาคม',
+        'มิถุนายน',
+        'กรกฎาคม',
+        'สิงหาคม',
+        'กันยายน',
+        'ตุลาคม ',
+        'พฤศจิกายน',
+        'ธันวาคม',
+      ].map((String month) {
         // print(value);
         return DropdownMenuItem(
-          value: value,
+          value: month,
           child: Text(
-            value.toString(),
+            month.toString(),
             style: MyConstant().h3Stlye(),
           ),
         );
       }).toList(),
-      onChanged: (String? value) {
+      onChanged: (String? month) {
         setState(() {
-          dropdownValue = value;
+          dropdownMonth = month;
         });
         print('------value-------');
-        print(dropdownValue);
+        print(dropdownMonth);
       },
       hint: const Text(
         'กรุณาเลือก',
         style: TextStyle(
             color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
       ),
+    );
+  }
+
+  DropdownButton<String> buildDropYear() {
+    return DropdownButton(
+      value: dropdownYear,
+      items: [
+        '2565',
+        '2566',
+      ].map((String year) {
+        // print(value);
+        return DropdownMenuItem(
+          value: year,
+          child: Text(
+            year.toString(),
+            style: MyConstant().h3Stlye(),
+          ),
+        );
+      }).toList(),
+      onChanged: (String? year) {
+        setState(() {
+          dropdownYear = year;
+        });
+        print('------value-------');
+        print(dropdownYear);
+      },
+      hint: const Text(
+        'กรุณาเลือก',
+        style: TextStyle(
+            color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+
+  DropdownButton<String> buildDropLock() {
+    return DropdownButton(
+      value: selectedName,
+      hint: const Text(
+        'กรุณาเลือก',
+        style: TextStyle(
+            color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
+      ),
+      items: data.map(
+        (list) {
+          return DropdownMenuItem(
+            child: Text(list['L_Name']!),
+            value: list['L_ID']!.toString(),
+          );
+        },
+      ).toList(),
+      onChanged: (String? lock) {
+        setState(() {
+          selectedName = lock;
+        });
+      },
     );
   }
 
@@ -166,44 +250,39 @@ class _AddReserveState extends State<AddReserve> {
   Future<Null> uplondReserve() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String M_ID = preferences.getString('M_ID')!;
-    String? RE_FDate = '$tgl';
-    String? RE_EDate = '$tgl';
-    String? L_ID = dropdownValue;
+    String? RE_Month = dropdownMonth;
+    String? RE_Year = dropdownYear;
+    String? L_ID = selectedName;
     String? RES_ID = '1';
-    if (L_ID == 'A1') {
-      L_ID = '1';
-    } else {
-      L_ID = '2';
-    }
     print(
-        '## RE_FDate = $RE_FDate,RE_EDate = $RE_EDate,L_ID = $L_ID , RES_ID = $RES_ID , M_ID = $M_ID');
+        '## RE_Month = $RE_Month	,RE_Year = $RE_Year,L_ID = $L_ID , RES_ID = $RES_ID , M_ID = $M_ID');
     String path =
-        '${MyConstant.domain}/smallmarket/getReserveWhereDateLock.php?isAdd=true&RE_FDate=$RE_FDate&L_ID=$L_ID';
+        '${MyConstant.domain}/smallmarket/getReserveWhereDateLock.php?isAdd=true&RE_Month	=$RE_Month&L_ID=$L_ID&RE_Year=$RE_Year';
     await Dio().get(path).then((value) {
       print('## value => $value');
       if (value.toString() == 'null') {
         print('## Reserve OK');
         processInserReseve(
-            RE_FDate: RE_FDate,
-            RE_EDate: RE_EDate,
+            RE_Month: RE_Month,
+            RE_Year: RE_Year,
             L_ID: L_ID,
             RES_ID: RES_ID,
             M_ID: M_ID);
       } else {
-        MyDialog().normalDialog(context, 'มีการจองวันที่ $RE_FDate ไปแล้ว',
+        MyDialog().normalDialog(context, 'มีการจองวันที่ $RE_Month ไปแล้ว',
             'กรุณาเปลี่ยนวันที่จอง หรือล็อคที่จอง');
       }
     });
   }
 
   Future<Null> processInserReseve(
-      {String? RE_FDate,
-      String? RE_EDate,
+      {String? RE_Month,
+      String? RE_Year,
       String? L_ID,
       String? RES_ID,
       String? M_ID}) async {
     String apiInserReseve =
-        '${MyConstant.domain}/smallmarket/insertReserve.php?isAdd=true&RE_FDate=$RE_FDate&RE_EDate=$RE_EDate&L_ID=$L_ID&RES_ID=$RES_ID&M_ID=$M_ID';
+        '${MyConstant.domain}/smallmarket/insertReserve.php?isAdd=true&RE_Month=$RE_Month	&RE_Year=$RE_Year&L_ID=$L_ID&RES_ID=$RES_ID&M_ID=$M_ID';
     await Dio().post(apiInserReseve).then((value) {
       if (value.toString() == 'true') {
         Navigator.pop(context);
