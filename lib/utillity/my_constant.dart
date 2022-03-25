@@ -4,7 +4,8 @@ class MyConstant {
   // Genernal
   static String appName = 'Small Market';
   static String domain =
-      'https://1e0e-2001-fb1-129-8c95-c991-6d40-3821-7320.ngrok.io';
+      'https://feaa-2001-fb1-12a-27c3-bd18-4bde-76ad-de06.ngrok.io';
+  static String urlPromptpay = 'https://promptpay.io/0910488104.png';
 
   // Route
   static String routeLogin = '/login';
@@ -14,6 +15,8 @@ class MyConstant {
   static String routeRent = '/rent';
   static String routeAddReserve = '/add_reserve';
   static String routeEditProfile = '/edit_profile';
+  static String routeAddPayment = '/add_payment';
+  static String routeConfirmAddWallet = '/confirm_add_wallet';
 
   // Image
   static String image1 = 'images/image1.png';
@@ -22,6 +25,7 @@ class MyConstant {
   static String image4 = 'images/image4.png';
 
   //Color
+  static Color w = Color(0xffffffff);
   static Color primary = Color(0xffffccbc);
   static Color dart = Color(0xffcb9b8c);
   static Color light = Color(0xffffffee);
@@ -44,6 +48,16 @@ class MyConstant {
         color: dart,
         fontWeight: FontWeight.bold,
       );
+  TextStyle h1WhiteStlye() => TextStyle(
+        fontSize: 24,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+      );
+  TextStyle h1BlackStlye() => TextStyle(
+        fontSize: 24,
+        color: Colors.black,
+        fontWeight: FontWeight.w700,
+      );
   TextStyle h2Stlye() => TextStyle(
         fontSize: 18,
         color: dart,
@@ -52,6 +66,11 @@ class MyConstant {
   TextStyle h2WhiteStlye() => TextStyle(
         fontSize: 18,
         color: Colors.white,
+        fontWeight: FontWeight.w700,
+      );
+  TextStyle h2BlackStlye() => TextStyle(
+        fontSize: 18,
+        color: Colors.black,
         fontWeight: FontWeight.w700,
       );
   TextStyle h3Stlye() => TextStyle(
@@ -63,6 +82,11 @@ class MyConstant {
         fontSize: 14,
         color: Colors.white,
         fontWeight: FontWeight.normal,
+      );
+  TextStyle h3BlackStlye() => TextStyle(
+        fontSize: 14,
+        color: Colors.black,
+        fontWeight: FontWeight.w700,
       );
 
   // ButtonStyle

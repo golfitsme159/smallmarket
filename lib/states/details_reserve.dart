@@ -63,7 +63,7 @@ class _DetailReserveState extends State<DetailReserve> {
               padding: EdgeInsets.all(10),
               child: ShowTitle(
                 title:
-                    'เดือนเช่า : ${detailModel!.RE_Month}/${detailModel!.RE_Year}',
+                    'เดือนเช่า : ${detailModel!.RE_FirstDate}/${detailModel!.RE_EndDate}',
                 textStyle: MyConstant().h2Stlye(),
               ),
             ),

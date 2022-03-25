@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smallmarket/bodys/bank.dart';
 import 'package:smallmarket/models/pay_model.dart';
 import 'package:smallmarket/models/reserve_model.dart';
+import 'package:smallmarket/states/add_payment.dart';
 import 'package:smallmarket/states/details_reserve.dart';
 import 'package:smallmarket/utillity/my_constant.dart';
 import 'package:smallmarket/widgets/show_progress.dart';
@@ -67,7 +69,7 @@ class _ShowPaymentState extends State<ShowPayment> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: lond
-          ? ShowProgress()
+          ? const ShowProgress()
           : haveData!
               ? LayoutBuilder(
                   builder: (context, constraints) => buildListView(constraints),
@@ -107,7 +109,8 @@ class _ShowPaymentState extends State<ShowPayment> {
                     textStyle: MyConstant().h3Stlye(),
                   ),
                   ShowTitle(
-                    title: '${payModels[index].RE_FDate}',
+                    title:
+                        '${payModels[index].RE_FirstDate}/${payModels[index].RE_EndDate}',
                     textStyle: MyConstant().h3Stlye(),
                   ),
                 ],
@@ -126,15 +129,17 @@ class _ShowPaymentState extends State<ShowPayment> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          // print('## You Cick Datails');
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => DetailReserve(
-                          //       detailModel: payModels[index],
-                          //     ),
-                          //   ),
-                          // );
+                          print('## You Cick Payment');
+                          // Navigator.pushNamed(
+                          //     context, MyConstant.routeAddPayment);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Bank(
+                                AddPay: payModels[index],
+                              ),
+                            ),
+                          );
                         },
                         icon: Icon(
                           Icons.payments_outlined,
@@ -147,10 +152,6 @@ class _ShowPaymentState extends State<ShowPayment> {
                   ShowTitle(
                     title: 'ราคา : ${payModels[index].Price} บาท',
                     textStyle: MyConstant().h2Stlye(),
-                  ),
-                  ShowTitle(
-                    title: 'สถานะ : ${payModels[index].PS_Name}',
-                    textStyle: MyConstant().h3Stlye(),
                   ),
                   ShowTitle(title: '', textStyle: MyConstant().h3Stlye()),
                   ShowTitle(title: '', textStyle: MyConstant().h3Stlye()),

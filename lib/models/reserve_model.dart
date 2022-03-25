@@ -2,8 +2,8 @@ import 'dart:convert';
 
 class ReserveModel {
   final String RE_ID;
-  final String RE_Month;
-  final String RE_Year;
+  final String RE_FirstDate;
+  final String RE_EndDate;
   final String L_Name;
   final String RES_Name;
   final String M_Name;
@@ -12,8 +12,8 @@ class ReserveModel {
   final String Z_Name;
   ReserveModel({
     required this.RE_ID,
-    required this.RE_Month,
-    required this.RE_Year,
+    required this.RE_FirstDate,
+    required this.RE_EndDate,
     required this.L_Name,
     required this.RES_Name,
     required this.M_Name,
@@ -24,8 +24,8 @@ class ReserveModel {
 
   ReserveModel copyWith({
     String? RE_ID,
-    String? RE_Month,
-    String? RE_Year,
+    String? RE_FirstDate,
+    String? RE_EndDate,
     String? L_Name,
     String? RES_Name,
     String? M_Name,
@@ -35,8 +35,8 @@ class ReserveModel {
   }) {
     return ReserveModel(
       RE_ID: RE_ID ?? this.RE_ID,
-      RE_Month: RE_Month ?? this.RE_Month,
-      RE_Year: RE_Year ?? this.RE_Year,
+      RE_FirstDate: RE_FirstDate ?? this.RE_FirstDate,
+      RE_EndDate: RE_EndDate ?? this.RE_EndDate,
       L_Name: L_Name ?? this.L_Name,
       RES_Name: RES_Name ?? this.RES_Name,
       M_Name: M_Name ?? this.M_Name,
@@ -49,8 +49,8 @@ class ReserveModel {
   Map<String, dynamic> toMap() {
     return {
       'RE_ID': RE_ID,
-      'RE_Month': RE_Month,
-      'RE_Year': RE_Year,
+      'RE_FirstDate': RE_FirstDate,
+      'RE_EndDate': RE_EndDate,
       'L_Name': L_Name,
       'RES_Name': RES_Name,
       'M_Name': M_Name,
@@ -63,8 +63,8 @@ class ReserveModel {
   factory ReserveModel.fromMap(Map<String, dynamic> map) {
     return ReserveModel(
       RE_ID: map['RE_ID'] ?? '',
-      RE_Month: map['RE_Month'] ?? '',
-      RE_Year: map['RE_Year'] ?? '',
+      RE_FirstDate: map['RE_FirstDate'] ?? '',
+      RE_EndDate: map['RE_EndDate'] ?? '',
       L_Name: map['L_Name'] ?? '',
       RES_Name: map['RES_Name'] ?? '',
       M_Name: map['M_Name'] ?? '',
@@ -81,7 +81,7 @@ class ReserveModel {
 
   @override
   String toString() {
-    return 'ReserveModel(RE_ID: $RE_ID, RE_Month: $RE_Month, RE_Year: $RE_Year, L_Name: $L_Name, RES_Name: $RES_Name, M_Name: $M_Name, Price: $Price, T_Name: $T_Name, Z_Name: $Z_Name)';
+    return 'ReserveModel(RE_ID: $RE_ID, RE_FirstDate: $RE_FirstDate, RE_EndDate: $RE_EndDate, L_Name: $L_Name, RES_Name: $RES_Name, M_Name: $M_Name, Price: $Price, T_Name: $T_Name, Z_Name: $Z_Name)';
   }
 
   @override
@@ -90,8 +90,8 @@ class ReserveModel {
 
     return other is ReserveModel &&
         other.RE_ID == RE_ID &&
-        other.RE_Month == RE_Month &&
-        other.RE_Year == RE_Year &&
+        other.RE_FirstDate == RE_FirstDate &&
+        other.RE_EndDate == RE_EndDate &&
         other.L_Name == L_Name &&
         other.RES_Name == RES_Name &&
         other.M_Name == M_Name &&
@@ -103,8 +103,8 @@ class ReserveModel {
   @override
   int get hashCode {
     return RE_ID.hashCode ^
-        RE_Month.hashCode ^
-        RE_Year.hashCode ^
+        RE_FirstDate.hashCode ^
+        RE_EndDate.hashCode ^
         L_Name.hashCode ^
         RES_Name.hashCode ^
         M_Name.hashCode ^

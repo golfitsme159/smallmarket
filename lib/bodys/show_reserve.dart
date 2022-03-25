@@ -116,7 +116,7 @@ class _ShowReserveState extends State<ShowReserve> {
                   ),
                   ShowTitle(
                     title:
-                        '${reserveModels[index].RE_Month}/${reserveModels[index].RE_Year}',
+                        '${reserveModels[index].RE_FirstDate} - ${reserveModels[index].RE_EndDate}',
                     textStyle: MyConstant().h3Stlye(),
                   ),
                 ],
@@ -169,11 +169,7 @@ class _ShowReserveState extends State<ShowReserve> {
                     textStyle: MyConstant().h2Stlye(),
                   ),
                   ShowTitle(
-                    title: 'ประเภท : ${reserveModels[index].T_Name}',
-                    textStyle: MyConstant().h3Stlye(),
-                  ),
-                  ShowTitle(
-                    title: 'Zone : ${reserveModels[index].Z_Name}',
+                    title: 'สถานะ : ${reserveModels[index].RES_Name}',
                     textStyle: MyConstant().h3Stlye(),
                   ),
                   ShowTitle(title: '', textStyle: MyConstant().h3Stlye()),
